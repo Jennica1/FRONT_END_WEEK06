@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 const data = [
   {
@@ -36,27 +36,24 @@ function TaskForm() {
     ));
   }
 
-  const incompleteTasksCount = tasks.filter(task => !task.completed).length;
-
   const newListUI = tasks.map((task) => (
-    <div key={task.id} style={{ display: 'flex', justifyContent: 'center',  justifyContent:"space-between", margin: '1em'}}>
+    <div key={task.id} style={{ display: 'flex', justifyContent: 'center', justifyContent:"space-between", margin: '1em'}}>
       <input
         type="checkbox"
         checked={task.completed}
         onChange={() => toggleTaskCompletion(task.id)}
+        disabled={!tasks.find(t => t.id === task.id)} // Disable if the task is not found (i.e., deleted)
       />
       <p style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
         {task.taskName}
       </p>
-      <button className='btn-delete'
-      onClick={() => handleDeleteTask(task.id)}>Delete</button>
+      <button className='btn-delete' onClick={() => handleDeleteTask(task.id)}>Delete</button>
     </div>
   ));
 
   return (
     <>
       <h1>To Do List</h1>
-      <h3>Tasks Left: {incompleteTasksCount}</h3> {}
       <form onSubmit={handleAddTask}>
         <input
           type='text'
@@ -70,7 +67,7 @@ function TaskForm() {
         {newListUI}
       </div>
     </>
-  )
+  );
 }
 
 export default TaskForm;

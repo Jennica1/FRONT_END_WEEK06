@@ -1,4 +1,11 @@
 import React, { useState } from 'react'
+//renders an input box and a button for creating new tasks. 
+//Decide where the shared state should live. This is where you would also want to define the functions for updating the app state, including:
+
+//a function for toggling the complete status of a task
+//a function for adding a new task
+//a function for deleting a task
+
 
 const data = [
   {
@@ -17,6 +24,7 @@ function TaskForm() {
   const [tasks, setTasks] = useState(data);
   const [taskData, settaskData] = useState({ taskName: '', completed: false });
 
+
   function handleAddTask(e) {
     e.preventDefault();
     if (taskData.taskName) {
@@ -26,18 +34,18 @@ function TaskForm() {
     }
   }
 
+
   function handleDeleteTask(id) {
     setTasks(tasks.filter(task => task.id !== id));
   }
+
 
   function toggleTaskCompletion(id) {
     setTasks(tasks.map(task => 
       task.id === id ? { ...task, completed: !task.completed } : task
     ));
   }
-
-  const incompleteTasksCount = tasks.filter(task => !task.completed).length;
-
+  
   const newListUI = tasks.map((task) => (
     <div key={task.id} style={{ display: 'flex', justifyContent: 'center',  justifyContent:"space-between", margin: '1em'}}>
       <input
@@ -56,21 +64,22 @@ function TaskForm() {
   return (
     <>
       <h1>To Do List</h1>
-      <h3>Tasks Left: {incompleteTasksCount}</h3> {}
-      <form onSubmit={handleAddTask}>
+     <form onSubmit={handleAddTask}>
         <input
           type='text'
           value={taskData.taskName}
           onChange={(e) => settaskData({ ...taskData, taskName: e.target.value })}
         />
-        <button className='btn-task' type="submit">Add Task</button>
+        <button className='btn-task'
+        type="submit">Add Task</button>
       </form>
 
+
       <div>
-        {newListUI}
+      {newListUI}
       </div>
     </>
   )
 }
 
-export default TaskForm;
+export default TaskForm
